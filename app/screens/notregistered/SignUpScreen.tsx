@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  PixelRatio,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,7 +10,10 @@ import React, { useState } from 'react';
 import Anvelope from '../../../assets/anvelope.svg';
 import UserIcon from '../../../assets/user.svg';
 import Lock from '../../../assets/lock.svg';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
 import FormInput from '../../components/formInput';
 
@@ -31,6 +35,10 @@ const SignUpScreen = ({ navigation }: any) => {
       try {
         await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
         navigation.navigate('Sign In');
+        if (FIREBASE_AUTH.currentUser !== null) {
+          sendEmailVerification(FIREBASE_AUTH.currentUser);
+          console.log('Email odoslaný!');
+        }
       } catch (error: any) {
         setError(error.message);
       }
@@ -102,6 +110,7 @@ const styles = StyleSheet.create({
     width: '85%',
     flex: 1,
     marginTop: 50,
+    // marginTop: PixelRatio.getPixelSizeForLayoutSize(50),
     marginBottom: 70,
     position: 'relative',
   },

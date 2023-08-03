@@ -8,10 +8,27 @@ import {
 import React, { useState } from 'react';
 import Anvelope from '../../../assets/anvelope.svg';
 import FormInput from '../../components/formInput';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../../firebase';
 
 const ForgotPasswordScreen = ({ navigation }: any) => {
-  const [text, setText] = useState('');
-  console.log(text);
+  const [email, setEmail] = useState('');
+
+  const emailReset = () => {
+    if (email !== '') {
+      sendPasswordResetEmail(FIREBASE_AUTH, email)
+        .then(() => {
+          console.log('Reset odoslaný!');
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+        });
+      setEmail('');
+    }
+  };
 
   return (
     <ImageBackground
@@ -24,12 +41,14 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
           <FormInput
             placeholder='Your e-mail'
             secured={false}
-            onChangeText={setText}
-            changedText={text}
+            onChangeText={setEmail}
+            changedText={email}
             icon={<Anvelope width={30} height={30} />}
           />
           <TouchableOpacity activeOpacity={0.4}>
-            <Text style={styles.reserPasswordBtn}>RESET PASSWORD</Text>
+            <Text style={styles.reserPasswordBtn} onPress={emailReset}>
+              RESET PASSWORD
+            </Text>
           </TouchableOpacity>
         </View>
         <Text
