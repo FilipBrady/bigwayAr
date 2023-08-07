@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 type formInputProps = {
   placeholder: string;
@@ -18,24 +18,27 @@ const FormInput = ({
   changedText,
   inputMode,
 }: formInputProps) => {
+  const [isFocused, setIsFocused] = useState(false);
   return (
     <View>
       <View
         style={[
           styles.textInputIcon,
           {
-            transform: [{ translateY: 10 }, { translateX: 7 }],
+            transform: [{ translateY: 12 }, { translateX: 7 }],
           },
         ]}
       >
         {icon}
       </View>
       <TextInput
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         inputMode={inputMode ? inputMode : 'text'}
         placeholder={placeholder}
         secureTextEntry={secured}
         placeholderTextColor='#FFF'
-        style={styles.textInput}
+        style={isFocused ? styles.textInputFocused : styles.textInput}
         onChangeText={text => onChangeText(text)}
         value={changedText}
       />
@@ -45,7 +48,7 @@ const FormInput = ({
 
 const styles = StyleSheet.create({
   textInput: {
-    borderBottomWidth: 3,
+    borderBottomWidth: 2,
     borderBottomColor: '#FFFFFF',
     paddingVertical: 10,
     color: '#FFFFFF',
@@ -53,6 +56,18 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     paddingLeft: 62,
     marginBottom: 25,
+  },
+  textInputFocused: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#FFFFFF',
+    paddingVertical: 10,
+    color: '#FFFFFF',
+    fontSize: 18.87,
+    fontWeight: '400',
+    paddingLeft: 62,
+    marginBottom: 25,
+    backgroundColor: '#ffffff75',
+    borderWidth: 0,
   },
   textInputIcon: {
     position: 'absolute',
