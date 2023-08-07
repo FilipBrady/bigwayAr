@@ -10,6 +10,7 @@ import Anvelope from '../../../assets/anvelope.svg';
 import FormInput from '../../components/formInput';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
+import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
 
 const ForgotPasswordScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -35,25 +36,25 @@ const ForgotPasswordScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      <View style={styles.container}>
-        <Text style={styles.appLogo}>Logo appky</Text>
-        <View style={styles.formContainer}>
+      <View style={NotRegisteredStyles.container}>
+        <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
+        <View style={NotRegisteredStyles.formContainer}>
           <FormInput
             placeholder='Your e-mail'
             secured={false}
             onChangeText={setEmail}
             changedText={email}
-            icon={<Anvelope width={30} height={30} />}
+            icon={<Anvelope width={25} height={25} />}
           />
           <TouchableOpacity activeOpacity={0.4}>
-            <Text style={styles.reserPasswordBtn} onPress={emailReset}>
+            <Text style={NotRegisteredStyles.submitBtn} onPress={emailReset}>
               RESET PASSWORD
             </Text>
           </TouchableOpacity>
         </View>
         <Text
           onPress={() => navigation.navigate('Sign In')}
-          style={styles.signUpBtn}
+          style={NotRegisteredStyles.formSwitchBtn}
         >
           SIGN IN
         </Text>

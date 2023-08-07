@@ -16,13 +16,15 @@ import {
 } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
 import FormInput from '../../components/formInput';
+import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
+import NotificationMsg from '../../components/notificationMsg';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repetePassword, setRepetePassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>('');
 
   async function signUp() {
     if (
@@ -36,8 +38,8 @@ const SignUpScreen = ({ navigation }: any) => {
         await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
         navigation.navigate('Sign In');
         if (FIREBASE_AUTH.currentUser !== null) {
-          sendEmailVerification(FIREBASE_AUTH.currentUser);
-          console.log('Email odoslaný!');
+          sendEmailVerification(FIREBASE_AUTH.currentUser);        setError('Úspešne prihlásený');
+
         }
       } catch (error: any) {
         setError(error.message);
@@ -54,47 +56,47 @@ const SignUpScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      {error !== '' && <Text>{error}</Text>}
-      <View style={styles.container}>
-        <Text style={styles.appLogo}>Logo appky</Text>
-        <View style={styles.formContainer}>
+      <NotificationMsg error={error} />
+      <View style={NotRegisteredStyles.container}>
+        <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
+        <View style={NotRegisteredStyles.formContainer}>
           <FormInput
             placeholder='Username'
             secured={false}
             onChangeText={setUsername}
             changedText={username}
-            icon={<UserIcon width={30} height={30} />}
+            icon={<UserIcon width={25} height={25} />}
           />
           <FormInput
             placeholder='E - Mail'
             secured={false}
             onChangeText={setEmail}
             changedText={email}
-            icon={<Anvelope width={30} height={30} />}
+            icon={<Anvelope width={25} height={25} />}
           />
           <FormInput
             placeholder='Password'
             secured={true}
             onChangeText={setPassword}
             changedText={password}
-            icon={<Lock width={30} height={30} />}
+            icon={<Lock width={25} height={25} />}
           />
           <FormInput
             placeholder='Confirm Password'
             secured={true}
             onChangeText={setRepetePassword}
             changedText={repetePassword}
-            icon={<Lock width={30} height={30} />}
+            icon={<Lock width={25} height={25} />}
           />
           <TouchableOpacity activeOpacity={0.4}>
-            <Text style={styles.signInBtn} onPress={signUp}>
+            <Text style={NotRegisteredStyles.submitBtn} onPress={signUp}>
               SIGN UP
             </Text>
           </TouchableOpacity>
         </View>
         <Text
           onPress={() => navigation.navigate('Sign In')}
-          style={styles.signUpBtn}
+          style={NotRegisteredStyles.formSwitchBtn}
         >
           SIGN IN
         </Text>
@@ -105,43 +107,43 @@ const SignUpScreen = ({ navigation }: any) => {
 
 export default SignUpScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    width: '85%',
-    flex: 1,
-    marginTop: 50,
-    // marginTop: PixelRatio.getPixelSizeForLayoutSize(50),
-    marginBottom: 70,
-    position: 'relative',
-  },
-  appLogo: {
-    fontSize: 36,
-    alignSelf: 'center',
-    marginBottom: 150,
-  },
-  formContainer: {
-    position: 'absolute',
-    top: '20%',
-    alignSelf: 'center',
-    width: '100%',
-  },
-  signInBtn: {
-    width: '80%',
-    alignSelf: 'center',
-    backgroundColor: '#FFF',
-    color: '#3069b0',
-    textAlign: 'center',
-    paddingVertical: 15,
-    borderRadius: 15,
-    fontSize: 25,
-    marginVertical: 25,
-  },
-  signUpBtn: {
-    color: '#FFF',
-    textAlign: 'center',
-    fontSize: 16,
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     width: '85%',
+//     flex: 1,
+//     marginTop: 50,
+//     // marginTop: PixelRatio.getPixelSizeForLayoutSize(50),
+//     marginBottom: 70,
+//     position: 'relative',
+//   },
+//   appLogo: {
+//     fontSize: 36,
+//     alignSelf: 'center',
+//     marginBottom: 150,
+//   },
+//   formContainer: {
+//     position: 'absolute',
+//     top: '20%',
+//     alignSelf: 'center',
+//     width: '100%',
+//   },
+//   signInBtn: {
+//     width: '80%',
+//     alignSelf: 'center',
+//     backgroundColor: '#FFF',
+//     color: '#3069b0',
+//     textAlign: 'center',
+//     paddingVertical: 15,
+//     borderRadius: 15,
+//     fontSize: 25,
+//     marginVertical: 25,
+//   },
+//   signUpBtn: {
+//     color: '#FFF',
+//     textAlign: 'center',
+//     fontSize: 16,
+//     position: 'absolute',
+//     bottom: 0,
+//     alignSelf: 'center',
+//   },
+// });
