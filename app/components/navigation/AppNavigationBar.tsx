@@ -3,13 +3,31 @@ import NavigationIcon from '../../../assets/menu-icon.svg';
 import QrCodeScanner from '../../../assets/qr-scan-icon.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import OpenedNavigation from './OpenedNavigation';
+import { useState } from 'react';
+import QrCodeScannerComponent from '../QrCodeScannerComponent';
 
 const AppNavigationBar = () => {
+  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+  const [isScannerOpen, setIsScannerOpen] = useState(false); //
+  const openScanner = () => {
+    setIsScannerOpen(true);
+  };
+
+  const closeScanner = () => {
+    setIsScannerOpen(false);
+  };
+
   return (
-    <View style={{ height: '100%' }}>
-      <OpenedNavigation />
+    <View>
+      <OpenedNavigation
+        isNavigationOpen={isNavigationOpen}
+        setIsNavigationOpen={setIsNavigationOpen}
+      />
       <View style={styles.navigationContainer}>
-        <TouchableOpacity activeOpacity={0.3}>
+        <TouchableOpacity
+          activeOpacity={0.3}
+          onPress={() => setIsNavigationOpen(true)}
+        >
           <NavigationIcon width={30} height={21} />
         </TouchableOpacity>
         <Text
@@ -29,7 +47,7 @@ const AppNavigationBar = () => {
             right: 21,
           }}
         >
-          <TouchableOpacity activeOpacity={0.3}>
+          <TouchableOpacity activeOpacity={0.3} onPress={openScanner}>
             <QrCodeScanner width={33} height={30} />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.3}>
@@ -42,6 +60,7 @@ const AppNavigationBar = () => {
           </TouchableOpacity>
         </View>
       </View>
+      {isScannerOpen && <QrCodeScannerComponent onClose={closeScanner} />}
     </View>
   );
 };
@@ -52,9 +71,7 @@ const styles = StyleSheet.create({
   navigationContainer: {
     height: 85,
     flexDirection: 'row',
-    paddingHorizontal: 21,
     alignItems: 'center',
-    position: 'relative',
   },
   navigationScreenName: {
     color: '#124B92',

@@ -1,5 +1,15 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Animated,
+  Easing,
+  Dimensions,
+  Button,
+} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import CancelIcon from '../../../assets/cancle-icon.svg';
 import PoiStar from '../../../assets/poi-star.svg';
 import RankIcon from '../../../assets/rank-icon.svg';
@@ -7,11 +17,24 @@ import ScanIconGreen from '../../../assets/scan-icon-green-bg.svg';
 import HeartIcon from '../../../assets/heart-icon.svg';
 import OpenedNavigationComponent from './OpenedNavigationComponent';
 
-const OpenedNavigation = () => {
+type OpenNavigationProps = {
+  isNavigationOpen: boolean;
+  setIsNavigationOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const OpenedNavigation = ({
+  isNavigationOpen,
+  setIsNavigationOpen,
+}: OpenNavigationProps) => {
   const [navigationItemList, setnavigationItemList] = useState([
     {
       navigationItenId: 1,
-      navigationItemIcon: <PoiStar width={30} height={30} />,
+      navigationItemIcon: (
+        <PoiStar
+          width={30}
+          height={30}
+          style={{ backgroundColor: 'rgba(0,0,0,0)' }}
+        />
+      ),
       navigationItemText: 'Všetky lokality QR kódy',
     },
     {
@@ -30,8 +53,37 @@ const OpenedNavigation = () => {
       navigationItemText: 'Obľúbené POI/QR',
     },
   ]);
+  const animationValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animationValue, {
+      toValue: isNavigationOpen ? 1 : 0,
+      duration: 400,
+      easing: Easing.ease,
+      useNativeDriver: false,
+    }).start();
+  }, [isNavigationOpen]);
   return (
-    <View style={styles.openedNavigationContainer}>
+    <Animated.View
+      style={[
+        styles.openedNavigationContainer,
+        {
+          transform: [
+            {
+              translateX: animationValue.interpolate({
+                inputRange: [0, 1],
+                outputRange: [-700, 0],
+              }),
+            },
+          ],
+          opacity: animationValue.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+          }),
+        },
+      ]}
+    >
+      <View style={styles.backgroundCircle} />
       <View
         style={{
           flexDirection: 'row',
@@ -41,7 +93,10 @@ const OpenedNavigation = () => {
           marginBottom: 70,
         }}
       >
-        <TouchableOpacity activeOpacity={0.3}>
+        <TouchableOpacity
+          activeOpacity={0.3}
+          onPress={() => setIsNavigationOpen(false)}
+        >
           <CancelIcon width={26} height={25} />
         </TouchableOpacity>
         <Image
@@ -56,13 +111,7 @@ const OpenedNavigation = () => {
           navigationItem={navigationItem}
         />
       ))}
-      {/* <TouchableOpacity activeOpacity={0.3} style={styles.navigationItem}>
-        <View style={styles.navigationItemImageBox}>
-          <PoiStar width={30} height={30} />
-        </View>
-        <Text>Všetky lokality QR kódy</Text>
-      </TouchableOpacity> */}
-    </View>
+    </Animated.View>
   );
 };
 
@@ -72,9 +121,9 @@ const styles = StyleSheet.create({
   openedNavigationContainer: {
     position: 'absolute',
     top: 0,
-    left: 0,
+    left: -21,
     width: '85%',
-    height: '100%',
+    height: Dimensions.get('screen').height,
     zIndex: 10000,
     backgroundColor: '#FFF',
     borderTopRightRadius: 20,
@@ -84,6 +133,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 20, height: 40 },
     shadowOpacity: 1,
     shadowRadius: 3,
+  },
+  backgroundCircle: {
+    width: 294,
+    height: 294,
+    position: 'absolute',
+    top: '-10%',
+    left: '-50%',
+    backgroundColor: 'rgba(79, 136, 207, 0.2)',
+    zIndex: -1,
+    borderRadius: 1000,
   },
   navigationItem: {
     flexDirection: 'row',

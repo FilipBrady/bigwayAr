@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import Anvelope from '../../../assets/anvelope.svg';
-import FormInput from '../../components/formInput';
+import FormInput from '../../components/FormInput';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';

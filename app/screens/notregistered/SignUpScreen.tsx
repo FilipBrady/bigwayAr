@@ -15,9 +15,9 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
-import FormInput from '../../components/formInput';
+import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
-import NotificationMsg from '../../components/notificationMsg';
+import NotificationMsg from '../../components/NotificationMsg';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
