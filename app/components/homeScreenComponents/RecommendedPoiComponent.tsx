@@ -2,6 +2,7 @@ import { View, Text, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import RecommendedPoiBox from './RecommendedPoiBox';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { PointOfInterest, poiData } from '../../data/poiData';
 
 const RecommendedPoiComponent = () => {
   const [recommendedPoi, setRecommendedPoi] = useState([
@@ -36,7 +37,7 @@ const RecommendedPoiComponent = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        {recommendedPoi.map(Poi => (
+        {poiData.map((Poi: PointOfInterest) => (
           <RecommendedPoiBox Poi={Poi} key={Poi.id} />
         ))}
         <Text
