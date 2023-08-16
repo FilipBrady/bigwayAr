@@ -3,8 +3,13 @@ import React from 'react';
 import PoiStar from '../../../assets/poi-star.svg';
 import Distance from '../../../assets/distance.svg';
 import Navigate from '../../../assets/navigate.svg';
+import { PointOfInterest } from '../../data/poiData';
 
-const PoiAboutHeader = () => {
+type PoiPlaceProps = {
+  poiPlace: PointOfInterest;
+};
+
+const PoiAboutHeader = ({ poiPlace }: PoiPlaceProps) => {
   return (
     <View>
       <Image
@@ -16,11 +21,11 @@ const PoiAboutHeader = () => {
           borderBottomRightRadius: 10,
         }}
       />
-      <Text style={styles.poiTitle}>poiTitle</Text>
+      <Text style={styles.poiTitle}>{poiPlace.poiTitle}</Text>
       <View style={styles.infoBox}>
         <View style={styles.infoItem}>
           <PoiStar width={21} height={21} />
-          <Text>poiPoints bodov</Text>
+          <Text>{poiPlace.poiPoints} bodov</Text>
         </View>
         <View style={styles.divider} />
         <View style={styles.infoItem}>
@@ -47,6 +52,7 @@ const styles = StyleSheet.create({
     color: '#124B92',
     marginTop: 29,
     marginBottom: 28,
+    paddingHorizontal: 21
   },
   infoBox: {
     flexDirection: 'row',

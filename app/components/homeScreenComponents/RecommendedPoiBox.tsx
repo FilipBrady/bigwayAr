@@ -5,27 +5,18 @@ import ArrowRight from '../../../assets/arrow-right.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Link, useRouter } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
+import { PointOfInterest } from '../../data/poiData';
 
 type RecommendedPoiBoxProps = {
-  Poi: {
-    id: number;
-    poiTitle: string;
-    poiPoints: number;
-  };
+  Poi: PointOfInterest;
 };
 const RecommendedPoiBox = ({ Poi }: RecommendedPoiBoxProps) => {
-  const router = useRouter();
   const navigation = useNavigation<any>();
-
-  const navigateToPoiAbout = () => {
-    navigation.navigate('AboutPoi', { id: Poi.id }); // Navigate with the dynamic ID parameter
-  };
 
   return (
     <TouchableOpacity
       style={styles.recomendedPoiContainer}
       activeOpacity={0.7}
-      // onPress={navigateToPoiAbout}
       onPress={() =>
         navigation.navigate('AboutPoi', {
           PoiId: Poi.id,
