@@ -1,15 +1,22 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import PoiStar from '../../../assets/poi-star.svg';
 import Distance from '../../../assets/distance.svg';
 import Navigate from '../../../assets/navigate.svg';
 import { PointOfInterest } from '../../data/poiData';
+import getDistance from '../../../hooks/getDistance';
+import handleNavigationButton from '../../../hooks/handleNavigationBtn';
 
 type PoiPlaceProps = {
   poiPlace: PointOfInterest;
 };
 
 const PoiAboutHeader = ({ poiPlace }: PoiPlaceProps) => {
+  const distance = getDistance({
+    targetLat: poiPlace.poiExactLocation.latitude,
+    targetLon: poiPlace.poiExactLocation.longitude,
+  });
+
   return (
     <View>
       <Image
@@ -30,13 +37,22 @@ const PoiAboutHeader = ({ poiPlace }: PoiPlaceProps) => {
         <View style={styles.divider} />
         <View style={styles.infoItem}>
           <Distance width={21} height={21} />
-          <Text>45 km</Text>
+          <Text>{Math.floor(distance)} km</Text>
         </View>
         <View style={styles.divider} />
-        <View style={styles.infoItem}>
+        <TouchableOpacity
+          activeOpacity={0.3}
+          onPress={() =>
+            handleNavigationButton({
+              targetLat: poiPlace.poiExactLocation.latitude,
+              targetLon: poiPlace.poiExactLocation.longitude,
+            })
+          }
+          style={styles.infoItem}
+        >
           <Navigate width={21} height={21} />
           <Text>Navigovať</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -52,7 +68,7 @@ const styles = StyleSheet.create({
     color: '#124B92',
     marginTop: 29,
     marginBottom: 28,
-    paddingHorizontal: 21
+    paddingHorizontal: 21,
   },
   infoBox: {
     flexDirection: 'row',

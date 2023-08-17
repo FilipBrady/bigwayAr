@@ -8,7 +8,10 @@ import {
 import React, { useState } from 'react';
 import UserIcon from '../../../assets/user.svg';
 import Lock from '../../../assets/lock.svg';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithCredential,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { FIREBASE_AUTH } from '../../../firebase';
 import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
@@ -37,7 +40,7 @@ const LoginScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      <NotificationMsg error={error} />
+      <NotificationMsg error={error} setError={setError} />
       <View style={NotRegisteredStyles.container}>
         <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
         <View style={NotRegisteredStyles.formContainer}>

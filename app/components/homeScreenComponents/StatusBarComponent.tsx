@@ -20,7 +20,11 @@ const StatusBarComponent = () => {
 
 export default StatusBarComponent;
 const styles = StyleSheet.create({
-  statusBarContainer: { flexDirection: 'row', justifyContent: 'space-between', height: 50},
+  statusBarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 50,
+  },
   statusBarText: { fontSize: 12, color: '#797979', fontWeight: '400' },
   statusBarNumber: { fontSize: 16, color: '#000000', fontWeight: '400' },
 });
