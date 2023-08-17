@@ -7,6 +7,8 @@ import { useState } from 'react';
 import QrCodeScannerComponent from '../QrCodeScannerComponent';
 import ArrowRight from '../../../assets/arrow-right.svg';
 import { useNavigation } from 'expo-router';
+import { signOut } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../../firebase';
 
 type AppNavigationProps = {
   userProfileShow: boolean;
@@ -74,7 +76,10 @@ const AppNavigationBar2 = ({
             <QrCodeScanner width={33} height={30} />
           </TouchableOpacity>
           {userProfileShow && (
-            <TouchableOpacity activeOpacity={0.3}>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={() => signOut(FIREBASE_AUTH)}
+            >
               <Image
                 source={require('../../../assets/images/user-profile-pic.jpeg')}
                 width={41}

@@ -56,7 +56,7 @@ const SignUpScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      <NotificationMsg error={error} />
+  <NotificationMsg error={error} setError={setError}/>
       <View style={NotRegisteredStyles.container}>
         <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
         <View style={NotRegisteredStyles.formContainer}>

@@ -1,9 +1,10 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { PointOfInterest } from '../../data/poiData';
 import NavigateIcon from '../../../assets/navigate.svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import handleNavigationButton from '../../../hooks/handleNavigationBtn';
 
 type PoiAboutBtnProps = {
   poiPlace: PointOfInterest;
@@ -11,7 +12,15 @@ type PoiAboutBtnProps = {
 
 const PoiAboutNavigateBtn = ({ poiPlace }: PoiAboutBtnProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.7}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={() =>
+        handleNavigationButton({
+          targetLat: poiPlace.poiExactLocation.latitude,
+          targetLon: poiPlace.poiExactLocation.longitude,
+        })
+      }
+    >
       <LinearGradient
         colors={[
           'rgba(0, 97, 255, 1)',
