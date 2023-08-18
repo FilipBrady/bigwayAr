@@ -1,17 +1,16 @@
 import { View, Text, ScrollView } from 'react-native';
 import React, { useState } from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import PoiAboutHeader from './PoiAboutHeader';
-import { poiData } from '../../data/poiData';
 import PoiAboutMainContent from './PoiAboutMainContent';
 import PoiAboutNavigateBtn from './PoiAboutNavigateBtn';
 import AppNavigationBar2 from '../navigation/AppNavigationBar2';
+import { useAppContainer } from '../container/Context';
 
 const PoiAboutScreenComponent = () => {
   const route = useRoute();
   const [screenScrollY, setScreenScrollY] = useState(0);
-
+  const { poiData } = useAppContainer();
 
   const routeId = route.params?.PoiId;
   return (
@@ -37,7 +36,9 @@ const PoiAboutScreenComponent = () => {
         <AppNavigationBar2
           userProfileShow={false}
           navOrBack={'back'}
-          screenTitle={poiData[route.params.PoiId - 1].poiTitle}
+          screenTitle={
+            poiData.find(poi => poi.id === route.params.PoiId)?.poiTitle
+          }
         />
       </View>
       {poiData.map(poiPlace => {

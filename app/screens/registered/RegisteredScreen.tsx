@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './HomeScreen';
 import PoiAboutScreenComponent from '../../components/poiAboutScreenComponents/[id]';
+import QrScannerScreen from './QrScannerScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,11 @@ export default function RegisteredScreen() {
         <Stack.Screen
           name='AboutPoi'
           component={PoiAboutScreenComponent}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='QrScanner'
+          component={QrScannerScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

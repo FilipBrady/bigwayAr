@@ -5,6 +5,8 @@ import NavigateIcon from '../../../assets/navigate.svg';
 import { LinearGradient } from 'expo-linear-gradient';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import handleNavigationButton from '../../../hooks/handleNavigationBtn';
+import { FIREBASE_DB } from '../../../firebase';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 type PoiAboutBtnProps = {
   poiPlace: PointOfInterest;

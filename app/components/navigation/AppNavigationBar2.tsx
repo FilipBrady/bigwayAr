@@ -26,6 +26,7 @@ const AppNavigationBar2 = ({
   const navigation = useNavigation();
   const openScanner = () => {
     setIsScannerOpen(true);
+    navigation.navigate('QrScanner');
   };
 
   const closeScanner = () => {
@@ -90,7 +91,6 @@ const AppNavigationBar2 = ({
           )}
         </View>
       </View>
-      {isScannerOpen && <QrCodeScannerComponent onClose={closeScanner} />}
     </View>
   );
 };

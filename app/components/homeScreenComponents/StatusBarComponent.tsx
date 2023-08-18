@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import React from 'react';
+import { getDocs, collection } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../../firebase';
 
 const StatusBarComponent = () => {
+
   return (
     <View style={styles.statusBarContainer}>
       <View>

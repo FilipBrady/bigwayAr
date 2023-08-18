@@ -84,6 +84,18 @@ const OpenedNavigation = ({
       ]}
     >
       <View style={styles.backgroundCircle} />
+      {/* <TouchableOpacity
+        onPress={() => setIsNavigationOpen(false)}
+        style={{
+          // This 20% width area will capture taps and close the navigation
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: '20%',
+          height: '100%',
+          backgroundColor: 'rgba(0,0,0,.5)',
+        }}
+      /> */}
       <View
         style={{
           flexDirection: 'row',

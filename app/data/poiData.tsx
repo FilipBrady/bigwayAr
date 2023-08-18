@@ -56,7 +56,7 @@ export const poiData = [
 ];
 
 export type PointOfInterest = {
-  id: number;
+  id: string;
   poiTitle: string;
   poiPoints: number;
   poiMainImage: string;
