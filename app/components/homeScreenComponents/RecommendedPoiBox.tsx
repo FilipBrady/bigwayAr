@@ -27,7 +27,7 @@ const RecommendedPoiBox = ({ Poi }: RecommendedPoiBoxProps) => {
         source={require('../../../assets/images/poi-place-image.jpeg')}
         style={styles.recomendedPoiImage}
       />
-      <View style={{ padding: 10, paddingBottom: 0, width: '70%' }}>
+      <View style={{ padding: 10, paddingBottom: 0, width: '70%', justifyContent: "space-between" }}>
         <Text style={styles.poiTitle}>{Poi.poiTitle}</Text>
         <View style={styles.bottomRow}>
           <View style={styles.starContainer}>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 8,
+    marginVertical: 8,
   },
   starContainer: {
     flexDirection: 'row',

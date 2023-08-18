@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
 import { BarCodeScanner, BarCodeScannedCallback } from 'expo-barcode-scanner';
+import { useNavigation } from 'expo-router';
 
-interface QrCodeScannerProps {
-  onClose: () => void;
-}
-
-const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
+const QrScannerScreen = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
-
+  const navigation = useNavigation();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -32,7 +29,7 @@ const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
 
   const closeScanner = () => {
     setScanned(false);
-    onClose(); // Call the onClose function passed as a prop
+    navigation.goBack();
   };
 
   if (hasPermission === null) {
@@ -46,10 +43,7 @@ const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={
-          (StyleSheet.absoluteFillObject,
-          { width: '100%', height: '100%', zIndex: 10000 })
-        }
+        style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
         <View style={styles.scanAgainContainer}>
@@ -59,18 +53,15 @@ const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
           />
         </View>
       )}
-      <Button title='Close Scanner' onPress={closeScanner} />
+      <Button title='Close Scanner' onPress={() => navigation.goBack()} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: Dimensions.get("screen").width,
-    height: Dimensions.get("screen").height,
+    width: '100%',
+    height: '100%',
   },
   scanAgainContainer: {
     position: 'absolute',
@@ -81,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QrCodeScannerComponent;
+export default QrScannerScreen;

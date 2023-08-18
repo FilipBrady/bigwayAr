@@ -1,20 +1,12 @@
 import { View, Text, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import RecommendedPoiBox from './RecommendedPoiBox';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import { PointOfInterest, poiData } from '../../data/poiData';
+import { ScrollView } from 'react-native-gesture-handler';
+import { PointOfInterest } from '../../data/poiData';
+import { useAppContainer } from '../container/Context';
 
 const RecommendedPoiComponent = () => {
-  const [recommendedPoi, setRecommendedPoi] = useState([
-    { id: 1, poiTitle: 'Place 1', poiPoints: 50 },
-    { id: 2, poiTitle: 'Place 2', poiPoints: 10 },
-    { id: 3, poiTitle: 'Place 3', poiPoints: 60 },
-    { id: 4, poiTitle: 'Place 4', poiPoints: 40 },
-    { id: 5, poiTitle: 'Place 5', poiPoints: 501 },
-    { id: 6, poiTitle: 'Place 6', poiPoints: 520 },
-    { id: 7, poiTitle: 'Place 7', poiPoints: 20 },
-    { id: 8, poiTitle: 'Place 8', poiPoints: 50 },
-  ]);
+  const { poiData } = useAppContainer();
   return (
     <View>
       <Text
