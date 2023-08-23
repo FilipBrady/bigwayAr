@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
 import { BarCodeScanner, BarCodeScannedCallback } from 'expo-barcode-scanner';
+import { useNavigation } from 'expo-router';
 
 interface QrCodeScannerProps {
   onClose: () => void;
@@ -9,6 +10,7 @@ interface QrCodeScannerProps {
 const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
+  const navigation = useNavigation<any>();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -27,7 +29,9 @@ const QrCodeScannerComponent = ({ onClose }: QrCodeScannerProps) => {
     data: string;
   }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned`);
+    navigation.navigate('AboutPoi', {
+      PoiId: data,
+    });
   };
 
   const closeScanner = () => {
@@ -69,8 +73,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width: Dimensions.get("screen").width,
-    height: Dimensions.get("screen").height,
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
   },
   scanAgainContainer: {
     position: 'absolute',

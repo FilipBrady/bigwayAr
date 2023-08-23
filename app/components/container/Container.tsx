@@ -6,7 +6,6 @@ import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { PointOfInterest, PointsOfInterest } from '../../data/poiData';
 
 export type AppState = {
-  test: string;
   poiData: PointsOfInterest;
 };
 
@@ -14,7 +13,6 @@ type Props = {
   children: (props: AppState) => JSX.Element;
 };
 const Container = ({ children }: Props) => {
-  const [test, setTest] = useState('Hiiii');
   const [hasLoaded, setHasLoaded] = useState(false);
   const [poiData, setPoiData] = useState<PointsOfInterest>([]);
 
@@ -37,7 +35,6 @@ const Container = ({ children }: Props) => {
   }, []);
 
   const appState: AppState = {
-    test: test,
     poiData: poiData,
   };
 

@@ -23,7 +23,7 @@ const AppNavigationBar2 = ({
 }: AppNavigationProps) => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const openScanner = () => {
     setIsScannerOpen(true);
     navigation.navigate('QrScanner');

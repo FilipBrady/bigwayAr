@@ -14,10 +14,11 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from 'firebase/auth';
-import { FIREBASE_AUTH } from '../../../firebase';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
 import NotificationMsg from '../../components/NotificationMsg';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
@@ -35,11 +36,23 @@ const SignUpScreen = ({ navigation }: any) => {
       password === repetePassword
     ) {
       try {
-        await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          FIREBASE_AUTH,
+          email,
+          password
+        );
+        const userUid = userCredential.user.uid;
+        const newUserDocRef = doc(collection(FIREBASE_DB, 'users'), userUid);
+        await setDoc(newUserDocRef, {
+          id: userUid,
+          email: email,
+          name: username,
+          points: 0,
+        });
         navigation.navigate('Sign In');
         if (FIREBASE_AUTH.currentUser !== null) {
-          sendEmailVerification(FIREBASE_AUTH.currentUser);        setError('Úspešne prihlásený');
-
+          sendEmailVerification(FIREBASE_AUTH.currentUser);
+          setError('Úspešne prihlásený');
         }
       } catch (error: any) {
         setError(error.message);
@@ -56,7 +69,7 @@ const SignUpScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-  <NotificationMsg error={error} setError={setError}/>
+      <NotificationMsg error={error} setError={setError} />
       <View style={NotRegisteredStyles.container}>
         <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
         <View style={NotRegisteredStyles.formContainer}>
