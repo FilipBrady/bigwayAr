@@ -1,17 +1,31 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
+import { useNavigation } from 'expo-router';
 
 type NavigationItemProps = {
   navigationItem: {
     navigationItenId: number;
     navigationItemIcon: React.JSX.Element;
     navigationItemText: string;
+    navigationItemHref: string;
   };
+  setIsNavigationOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const OpenedNavigationComponent = ({ navigationItem }: NavigationItemProps) => {
+const OpenedNavigationComponent = ({
+  navigationItem,
+  setIsNavigationOpen,
+}: NavigationItemProps) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity activeOpacity={0.3} style={styles.navigationItem}>
+    <TouchableOpacity
+      activeOpacity={0.3}
+      style={styles.navigationItem}
+      onPress={() => {
+        navigation.navigate(navigationItem.navigationItemHref),
+          setIsNavigationOpen(false);
+      }}
+    >
       <View style={styles.navigationItemImageBox}>
         {navigationItem.navigationItemIcon}
       </View>

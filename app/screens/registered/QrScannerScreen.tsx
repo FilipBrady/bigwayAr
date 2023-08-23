@@ -6,7 +6,7 @@ import { useNavigation } from 'expo-router';
 const QrScannerScreen = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -24,7 +24,10 @@ const QrScannerScreen = () => {
     data: string;
   }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned`);
+    navigation.navigate('AboutPoi', {
+      PoiId: data,
+    });
   };
 
   const closeScanner = () => {

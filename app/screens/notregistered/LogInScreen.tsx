@@ -12,21 +12,29 @@ import {
   signInWithCredential,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { FIREBASE_AUTH } from '../../../firebase';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
 import NotificationMsg from '../../components/NotificationMsg';
+import { getDocs, collection } from 'firebase/firestore';
 
 const LoginScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userEmail, setUserEmail] = useState('');
   const [error, setError] = useState<string | null>('');
 
   async function signIn() {
     if (username !== '' && password !== '') {
+      const querySnapshot = await getDocs(collection(FIREBASE_DB, 'users'));
+      querySnapshot.forEach(doc => {
+        if (doc.data().name === username) {
+          setUserEmail(doc.data().email);
+        }
+      });
       try {
-        await signInWithEmailAndPassword(FIREBASE_AUTH, username, password);
-        navigation.navigate('Sign In');
+        await signInWithEmailAndPassword(FIREBASE_AUTH, userEmail, password);
+        // navigation.navigate('Sign In');
         setError('Úspešne prihlásený');
       } catch (error: any) {
         setError(error.message);

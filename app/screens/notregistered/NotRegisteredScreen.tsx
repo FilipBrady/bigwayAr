@@ -15,7 +15,7 @@ export default function NotRegisteredScreen() {
         <Stack.Screen
           name='Welcome'
           component={WelcomeScreen}
-          // options={{ headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name='Sign In'

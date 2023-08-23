@@ -28,29 +28,27 @@ const OpenedNavigation = ({
   const [navigationItemList, setnavigationItemList] = useState([
     {
       navigationItenId: 1,
-      navigationItemIcon: (
-        <PoiStar
-          width={30}
-          height={30}
-          style={{ backgroundColor: 'rgba(0,0,0,0)' }}
-        />
-      ),
+      navigationItemIcon: <PoiStar width={30} height={30} />,
       navigationItemText: 'Všetky lokality QR kódy',
+      navigationItemHref: 'AllPoiLocations',
     },
     {
       navigationItenId: 2,
       navigationItemIcon: <RankIcon width={30} height={30} />,
       navigationItemText: 'Aktuálny rebríček',
+      navigationItemHref: 'Home',
     },
     {
       navigationItenId: 3,
       navigationItemIcon: <ScanIconGreen width={30} height={30} />,
       navigationItemText: 'Zoznam získaných POI/QR',
+      navigationItemHref: 'Home',
     },
     {
       navigationItenId: 4,
       navigationItemIcon: <HeartIcon width={30} height={30} />,
       navigationItemText: 'Obľúbené POI/QR',
+      navigationItemHref: 'Home',
     },
   ]);
   const animationValue = useRef(new Animated.Value(0)).current;
@@ -121,6 +119,7 @@ const OpenedNavigation = ({
         <OpenedNavigationComponent
           key={navigationItem.navigationItenId}
           navigationItem={navigationItem}
+          setIsNavigationOpen={setIsNavigationOpen}
         />
       ))}
     </Animated.View>
