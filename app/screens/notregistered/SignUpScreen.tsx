@@ -48,6 +48,8 @@ const SignUpScreen = ({ navigation }: any) => {
           email: email,
           name: username,
           points: 0,
+          favorite: [],
+          visitedPlaces: [],
         });
         navigation.navigate('Sign In');
         if (FIREBASE_AUTH.currentUser !== null) {

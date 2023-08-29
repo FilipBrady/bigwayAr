@@ -11,12 +11,10 @@ const HomeScreen = () => {
   return (
     <View style={styles.homeScreenContainer}>
       <AppNavigationBar2
-        userProfileShow={true}
         navOrBack={'navbar'}
         screenTitle={'Domov'}
       />
       <StatusBarComponent />
-      {/* <QrCodeScanner /> */}
       <RecommendedPoiComponent />
     </View>
   );

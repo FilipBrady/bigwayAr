@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Link, useRouter } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
 import { PointOfInterest } from '../data/poiData';
+import { GlobalStyles } from '../styles/GlobalStyles';
 
 type RecommendedPoiBoxProps = {
   Poi: PointOfInterest;
@@ -35,11 +36,13 @@ const PoiThumbnail = ({ Poi }: RecommendedPoiBoxProps) => {
           justifyContent: 'space-between',
         }}
       >
-        <Text style={styles.poiTitle}>{Poi.poiTitle}</Text>
+        <Text style={GlobalStyles.SmallTextBlueBold}>{Poi.poiTitle}</Text>
         <View style={styles.bottomRow}>
           <View style={styles.starContainer}>
             <PoiStar width={13} />
-            <Text style={styles.points}>{Poi.poiPoints} bodov</Text>
+            <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
+              {Poi.poiPoints} bodov
+            </Text>
           </View>
           <ArrowRight width={17} />
         </View>

@@ -64,3 +64,14 @@ export type PointOfInterest = {
   poiDescription: string;
 };
 export type PointsOfInterest = PointOfInterest[];
+
+export type UserData = {
+  id: string;
+  email: string;
+  name: string;
+  points: number;
+  favorite: { favoriteId: number; poiId: string }[];
+  visitedPlaces: { visitedPlaceId: number; poiId: string }[];
+};
+
+export type UsersData = UserData[];

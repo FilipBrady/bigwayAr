@@ -5,6 +5,7 @@ import HomeScreen from './HomeScreen';
 import PoiAboutScreenComponent from '../../components/poiAboutScreenComponents/[id]';
 import QrScannerScreen from './QrScannerScreen';
 import AllPoiLocationsScreen from './AllPoiLocationsScreen';
+import UserProfileScreen from './UserProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,11 @@ export default function RegisteredScreen() {
         <Stack.Screen
           name='AllPoiLocations'
           component={AllPoiLocationsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='UserProfile'
+          component={UserProfileScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

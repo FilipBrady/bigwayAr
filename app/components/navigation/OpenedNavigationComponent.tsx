@@ -1,6 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { useNavigation } from 'expo-router';
+import { GlobalStyles } from '../../styles/GlobalStyles';
+import { signOut } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../../../firebase';
 
 type NavigationItemProps = {
   navigationItem: {
@@ -17,19 +20,28 @@ const OpenedNavigationComponent = ({
   setIsNavigationOpen,
 }: NavigationItemProps) => {
   const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       activeOpacity={0.3}
-      style={styles.navigationItem}
+      style={
+        navigationItem.navigationItemHref === 'LogOut'
+          ? styles.signOutItem
+          : styles.navigationItem
+      }
       onPress={() => {
-        navigation.navigate(navigationItem.navigationItemHref),
+        navigationItem.navigationItemHref === 'LogOut'
+          ? signOut(FIREBASE_AUTH)
+          : navigation.navigate(navigationItem.navigationItemHref),
           setIsNavigationOpen(false);
       }}
     >
       <View style={styles.navigationItemImageBox}>
         {navigationItem.navigationItemIcon}
       </View>
-      <Text>{navigationItem.navigationItemText}</Text>
+      <Text style={GlobalStyles.SmallTextBlueRegular}>
+        {navigationItem.navigationItemText}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -43,6 +55,15 @@ const styles = StyleSheet.create({
     gap: 16,
     marginLeft: 21,
     marginBottom: 23,
+  },
+  signOutItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+    marginLeft: 21,
+    marginBottom: 23,
+    position: 'absolute',
+    bottom: 45,
   },
   navigationItemImageBox: {
     width: 47,

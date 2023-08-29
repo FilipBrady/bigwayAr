@@ -15,7 +15,10 @@ import PoiStar from '../../../assets/poi-star.svg';
 import RankIcon from '../../../assets/rank-icon.svg';
 import ScanIconGreen from '../../../assets/scan-icon-green-bg.svg';
 import HeartIcon from '../../../assets/heart-icon.svg';
+import LogOutIcon from '../../../assets/logout.svg';
 import OpenedNavigationComponent from './OpenedNavigationComponent';
+import { signOut } from 'firebase/auth';
+import { GlobalStyles } from '../../styles/GlobalStyles';
 
 type OpenNavigationProps = {
   isNavigationOpen: boolean;
@@ -50,6 +53,27 @@ const OpenedNavigation = ({
       navigationItemText: 'Obľúbené POI/QR',
       navigationItemHref: 'Home',
     },
+    {
+      navigationItenId: 5,
+      navigationItemIcon: (
+        <Image
+          source={require('../../../assets/images/user-profile-pic.jpeg')}
+          width={41}
+          height={41}
+          style={{ width: 41, height: 41, borderRadius: 5 }}
+        />
+      ),
+      navigationItemText: 'Nastavenia účtu',
+      navigationItemHref: 'UserProfile',
+    },
+    {
+      navigationItenId: 6,
+      navigationItemIcon: (
+        <LogOutIcon width={30} height={30} />
+      ),
+      navigationItemText: 'Odhlásiť',
+      navigationItemHref: 'LogOut',
+    },
   ]);
   const animationValue = useRef(new Animated.Value(0)).current;
 
@@ -81,19 +105,6 @@ const OpenedNavigation = ({
         },
       ]}
     >
-      <View style={styles.backgroundCircle} />
-      {/* <TouchableOpacity
-        onPress={() => setIsNavigationOpen(false)}
-        style={{
-          // This 20% width area will capture taps and close the navigation
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: '20%',
-          height: '100%',
-          backgroundColor: 'rgba(0,0,0,.5)',
-        }}
-      /> */}
       <View
         style={{
           flexDirection: 'row',
@@ -133,7 +144,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: -21,
-    width: '85%',
+    width: '95%',
     height: Dimensions.get('screen').height,
     zIndex: 10000,
     backgroundColor: '#FFF',
@@ -144,16 +155,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 20, height: 40 },
     shadowOpacity: 1,
     shadowRadius: 3,
-  },
-  backgroundCircle: {
-    width: 294,
-    height: 294,
-    position: 'absolute',
-    top: '-10%',
-    left: '-50%',
-    backgroundColor: 'rgba(79, 136, 207, 0.2)',
-    zIndex: -1,
-    borderRadius: 1000,
   },
   navigationItem: {
     flexDirection: 'row',
