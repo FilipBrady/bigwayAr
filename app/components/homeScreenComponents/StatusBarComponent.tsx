@@ -2,18 +2,24 @@ import { View, Text, StyleSheet, Button } from 'react-native';
 import React from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../../firebase';
+import { GlobalStyles } from '../../styles/GlobalStyles';
 
 const StatusBarComponent = () => {
-
   return (
     <View style={styles.statusBarContainer}>
       <View>
-        <Text style={styles.statusBarText}>Aktúalny počet bodov</Text>
-        <Text style={styles.statusBarNumber}>1580</Text>
+        <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
+          Aktúalny počet bodov
+        </Text>
+        <Text style={GlobalStyles.BigTextBlackRegulat}>1580</Text>
       </View>
       <View>
-        <Text style={styles.statusBarText}>Aktuálne miesto</Text>
-        <Text style={[styles.statusBarNumber, { alignSelf: 'flex-end' }]}>
+        <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
+          Aktuálne miesto
+        </Text>
+        <Text
+          style={[GlobalStyles.BigTextBlackRegulat, { alignSelf: 'flex-end' }]}
+        >
           150
         </Text>
       </View>
@@ -28,6 +34,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 50,
   },
-  statusBarText: { fontSize: 12, color: '#797979', fontWeight: '400' },
-  statusBarNumber: { fontSize: 16, color: '#000000', fontWeight: '400' },
 });

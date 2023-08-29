@@ -7,6 +7,7 @@ import { useAppContainer } from '../../components/container/Context';
 import RecommendedPoiComponent from '../../components/homeScreenComponents/RecommendedPoiComponent';
 import PoiThumbnailContainer from '../../components/PoiThumbnailContainer';
 import PoiFilterComponent from '../../components/PoiFilterComponent';
+import { GlobalStyles } from '../../styles/GlobalStyles';
 
 const AllPoiLocationsScreen = () => {
   const { poiData } = useAppContainer();
@@ -20,11 +21,7 @@ const AllPoiLocationsScreen = () => {
 
   return (
     <View style={{ paddingHorizontal: 21 }}>
-      <AppNavigationBar2
-        userProfileShow={false}
-        navOrBack={'back'}
-        screenTitle={'Všetky lokality'}
-      />
+      <AppNavigationBar2 navOrBack={'back'} screenTitle={'Všetky lokality'} />
       <View
         style={{
           flexDirection: 'row',
@@ -32,7 +29,9 @@ const AllPoiLocationsScreen = () => {
           marginTop: 39,
         }}
       >
-        <Text>Zoradiť podľa</Text>
+        <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
+          Zoradiť podľa
+        </Text>
         <TouchableOpacity
           activeOpacity={0.3}
           onPress={() => setIsFilterVisible(!isFilterVisible)}

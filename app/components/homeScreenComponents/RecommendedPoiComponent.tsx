@@ -4,25 +4,23 @@ import RecommendedPoiBox from './RecommendedPoiBox';
 import { ScrollView } from 'react-native-gesture-handler';
 import { PointOfInterest } from '../../data/poiData';
 import { useAppContainer } from '../container/Context';
+import { GlobalStyles } from '../../styles/GlobalStyles';
 
 const RecommendedPoiComponent = () => {
   const { poiData } = useAppContainer();
   return (
     <View>
       <Text
-        style={{
-          fontSize: 16,
-          fontWeight: '600',
-          color: '#124B92',
-          marginBottom: 15,
-          marginTop: 36,
-        }}
+        style={[
+          GlobalStyles.BigTextBlueBold,
+          { marginBottom: 15, marginTop: 36 },
+        ]}
       >
         Odporúčané
       </Text>
       <ScrollView
         style={{
-          paddingTop: 20,
+          paddingTop: 10,
           width: Dimensions.get('screen').width,
           height: Dimensions.get('window').height - 190,
           transform: [{ translateX: -21 }],
@@ -33,13 +31,13 @@ const RecommendedPoiComponent = () => {
           <RecommendedPoiBox Poi={Poi} key={Poi.id} />
         ))}
         <Text
-          style={{
-            fontSize: 12,
-            fontWeight: '400',
-            color: '#797979',
-            alignSelf: 'center',
-            marginVertical: 31,
-          }}
+          style={[
+            GlobalStyles.ExtraSmallTextGrayRegulat,
+            {
+              alignSelf: 'center',
+              marginVertical: 31,
+            },
+          ]}
         >
           Zobraziť všetky
         </Text>
