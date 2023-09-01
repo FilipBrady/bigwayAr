@@ -11,9 +11,14 @@ import { GlobalStyles } from '../../styles/GlobalStyles';
 type AppNavigationProps = {
   navOrBack: 'navbar' | 'back';
   screenTitle: string;
+  scanIconShow?: boolean;
 };
 
-const AppNavigationBar2 = ({ navOrBack, screenTitle }: AppNavigationProps) => {
+const AppNavigationBar2 = ({
+  navOrBack,
+  screenTitle,
+  scanIconShow,
+}: AppNavigationProps) => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const navigation = useNavigation<any>();
@@ -56,9 +61,11 @@ const AppNavigationBar2 = ({ navOrBack, screenTitle }: AppNavigationProps) => {
             gap: 13,
           }}
         >
-          <TouchableOpacity activeOpacity={0.3} onPress={openScanner}>
-            <QrCodeScanner width={33} height={30} />
-          </TouchableOpacity>
+          {scanIconShow !== false && (
+            <TouchableOpacity activeOpacity={0.3} onPress={openScanner}>
+              <QrCodeScanner width={33} height={30} />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
