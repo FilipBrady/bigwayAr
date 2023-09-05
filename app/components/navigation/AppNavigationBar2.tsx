@@ -7,28 +7,34 @@ import { useState } from 'react';
 import ArrowRight from '../../../assets/arrow-right.svg';
 import { useNavigation } from 'expo-router';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import ShareIcon from '../../../assets/share-icon.svg';
+import FavoriteBtn from '../FavoriteBtn';
+import { useAppContainer } from '../container/Context';
+import { useRoute } from '@react-navigation/native';
+import AppNavigationIconsComponent from './AppNavigationIconsComponent';
 
 type AppNavigationProps = {
   navOrBack: 'navbar' | 'back';
   screenTitle: string;
   scanIconShow?: boolean;
+  titleShow?: boolean;
+  screenScrollY?: number;
 };
 
 const AppNavigationBar2 = ({
   navOrBack,
   screenTitle,
   scanIconShow,
+  titleShow,
+  screenScrollY,
 }: AppNavigationProps) => {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+
   const navigation = useNavigation<any>();
   const openScanner = () => {
     setIsScannerOpen(true);
     navigation.navigate('QrScanner');
-  };
-
-  const closeScanner = () => {
-    setIsScannerOpen(false);
   };
 
   return (
@@ -53,20 +59,48 @@ const AppNavigationBar2 = ({
             <ArrowRight width={30} height={20} rotation={180} />
           </TouchableOpacity>
         )}
-        <Text style={GlobalStyles.SmallTextBlueRegular}>{screenTitle}</Text>
-        <View
+        {titleShow !== false && (
+          <Text style={GlobalStyles.SmallTextBlueRegular}>{screenTitle}</Text>
+        )}
+        {/* <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             gap: 13,
+            transform: [{translateX: 51}]
           }}
         >
+          <ShareIcon width={33} />
+          {route.params !== undefined && (
+            <FavoriteBtn
+              Poi={poiData.find(Poi => Poi.id === route.params?.PoiId)}
+              width={33}
+              height={30}
+              position='relative'
+            />
+          )}
           {scanIconShow !== false && (
-            <TouchableOpacity activeOpacity={0.3} onPress={openScanner}>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={openScanner}
+              style={{
+                backgroundColor: '#FFF',
+                paddingLeft: 10,
+                paddingVertical: 8,
+                paddingRight: 51,
+                borderRadius: 10,
+                elevation: 20,
+              }}
+            >
               <QrCodeScanner width={33} height={30} />
             </TouchableOpacity>
           )}
-        </View>
+        </View> */}
+
+        <AppNavigationIconsComponent
+          scanIconShow={scanIconShow}
+          openScanner={openScanner}
+        />
       </View>
     </View>
   );

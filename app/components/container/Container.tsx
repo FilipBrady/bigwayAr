@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Provider } from './Context';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
-import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from 'firebase/firestore';
 import {
   PointOfInterest,
   PointsOfInterest,
@@ -38,23 +45,40 @@ const Container = ({ children }: Props) => {
         setPoiData(newPoiData);
       }
     };
-    const fetchUsersData = async () => {
-      const UserQuerySnapshot = await getDocs(collection(FIREBASE_DB, 'users'));
-
-      const newUserData: any = [];
-
-      UserQuerySnapshot.forEach(doc => {
-        newUserData.push(doc.data());
-        if (doc.data().id === FIREBASE_AUTH.currentUser?.uid) {
-          setCurrentUserData(doc.data());
-        }
-      });
-
-      setUsersData(newUserData);
-    };
 
     fetchPoiData();
-    fetchUsersData();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribeAuthState = onAuthStateChanged(
+      FIREBASE_AUTH,
+      async user => {
+        if (user) {
+          const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+
+          const docSnap = await getDoc(userDocRef);
+          if (docSnap.exists()) {
+            setCurrentUserData(docSnap.data() as UserData);
+          }
+
+          const unsubscribeUserData = onSnapshot(userDocRef, doc => {
+            if (doc.exists()) {
+              setCurrentUserData(doc.data() as UserData);
+            }
+          });
+
+          return () => {
+            unsubscribeUserData();
+          };
+        } else {
+          setCurrentUserData(undefined);
+        }
+      }
+    );
+
+    return () => {
+      unsubscribeAuthState();
+    };
   }, []);
 
   const appState: AppState = {

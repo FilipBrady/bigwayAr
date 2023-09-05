@@ -70,8 +70,8 @@ export type UserData = {
   email: string;
   name: string;
   points: number;
-  favorite: { favoriteId: number; poiId: string }[];
-  visitedPlaces: { visitedPlaceId: number; poiId: string }[];
+  favorite: { favoriteId: string; poiId: string }[];
+  visitedPlaces: { visitedPlaceId: string; poiId: string }[];
 };
 
 export type UsersData = UserData[];

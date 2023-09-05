@@ -8,10 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 import { PointOfInterest } from '../../data/poiData';
 import { GlobalStyles } from '../../styles/GlobalStyles';
 
-type RecommendedPoiBoxProps = {
+type RecommendedPoiThumbnailProps = {
   Poi: PointOfInterest;
 };
-const RecommendedPoiBox = ({ Poi }: RecommendedPoiBoxProps) => {
+const RecommendedPoiThumbnail = ({ Poi }: RecommendedPoiThumbnailProps) => {
   const navigation = useNavigation<any>();
 
   return (
@@ -62,16 +62,15 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 10, // Define this value
+      height: 10, 
     },
-    shadowOpacity: 0.15, // Adjust as needed
-    shadowRadius: 10, // Adjust as needed
-    marginBottom: 15, // Adjust as needed
+    shadowOpacity: 0.15, 
+    shadowRadius: 10, 
+    marginBottom: 15, 
     marginHorizontal: 21,
   },
   recomendedPoiImage: {
-    // width: 93,
-    // height: 93,
+
     width: '30%',
     height: '100%',
     borderRadius: 10,
@@ -99,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecommendedPoiBox;
+export default RecommendedPoiThumbnail;

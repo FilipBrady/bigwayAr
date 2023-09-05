@@ -34,11 +34,12 @@ const PoiAboutScreenComponent = () => {
         }}
       >
         <AppNavigationBar2
-          userProfileShow={false}
           navOrBack={'back'}
           screenTitle={
-            poiData.find(poi => poi.id === route.params.PoiId)?.poiTitle
+            String(poiData.find(poi => poi.id === route.params.PoiId)?.poiTitle)
           }
+          titleShow={false}
+          screenScrollY={screenScrollY}
         />
       </View>
       {poiData.map(poiPlace => {

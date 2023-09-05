@@ -51,7 +51,7 @@ const OpenedNavigation = ({
       navigationItenId: 4,
       navigationItemIcon: <HeartIcon width={30} height={30} />,
       navigationItemText: 'Obľúbené POI/QR',
-      navigationItemHref: 'Home',
+      navigationItemHref: 'FavoritePoiLocations',
     },
     {
       navigationItenId: 5,
@@ -68,9 +68,7 @@ const OpenedNavigation = ({
     },
     {
       navigationItenId: 6,
-      navigationItemIcon: (
-        <LogOutIcon width={30} height={30} />
-      ),
+      navigationItemIcon: <LogOutIcon width={30} height={30} />,
       navigationItemText: 'Odhlásiť',
       navigationItemHref: 'LogOut',
     },

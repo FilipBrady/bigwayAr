@@ -6,6 +6,7 @@ import Navigate from '../../../assets/navigate.svg';
 import { PointOfInterest } from '../../data/poiData';
 import getDistance from '../../../hooks/getDistance';
 import handleNavigationButton from '../../../hooks/handleNavigationBtn';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type PoiPlaceProps = {
   poiPlace: PointOfInterest;
@@ -28,6 +29,12 @@ const PoiAboutHeader = ({ poiPlace }: PoiPlaceProps) => {
           borderBottomRightRadius: 10,
         }}
       />
+      <LinearGradient
+        colors={['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.overlayView}
+      ></LinearGradient>
       <Text style={styles.poiTitle}>{poiPlace.poiTitle}</Text>
       <View style={styles.infoBox}>
         <View style={styles.infoItem}>
@@ -86,5 +93,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#0000001A',
     width: 1,
+  },
+  overlayView: {
+    height: 219,
+    width: '100%',
+    position: 'absolute',
   },
 });

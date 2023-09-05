@@ -1,11 +1,9 @@
 import { View, Text, Button, StyleSheet } from 'react-native';
 import React from 'react';
 import { FIREBASE_AUTH } from '../../../firebase';
-import AppNavigationBar from '../../components/navigation/AppNavigationBar';
 import StatusBarComponent from '../../components/homeScreenComponents/StatusBarComponent';
 import RecommendedPoiComponent from '../../components/homeScreenComponents/RecommendedPoiComponent';
 import AppNavigationBar2 from '../../components/navigation/AppNavigationBar2';
-// import QrCodeScanner from '../../components/QrCodeScanner';
 
 const HomeScreen = () => {
   return (
