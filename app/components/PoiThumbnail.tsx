@@ -1,12 +1,11 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import PoiStar from '../../assets/poi-star.svg';
 import ArrowRight from '../../assets/arrow-right.svg';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Link, useRouter } from 'expo-router';
 import { useNavigation } from '@react-navigation/native';
 import { PointOfInterest } from '../data/poiData';
 import { GlobalStyles } from '../styles/GlobalStyles';
+import FavoriteBtn from './FavoriteBtn';
 
 type RecommendedPoiBoxProps = {
   Poi: PointOfInterest;
@@ -15,26 +14,29 @@ const PoiThumbnail = ({ Poi }: RecommendedPoiBoxProps) => {
   const navigation = useNavigation<any>();
 
   return (
-    <TouchableOpacity
-      style={styles.recomendedPoiContainer}
-      activeOpacity={0.7}
-      onPress={() =>
-        navigation.navigate('AboutPoi', {
-          PoiId: Poi.id,
-        })
-      }
-    >
-      <Image
-        source={require('../../assets/images/poi-place-image.jpeg')}
-        style={styles.recomendedPoiImage}
-      />
-      <View
-        style={{
-          padding: 10,
-          paddingBottom: 0,
-          width: '70%',
-          justifyContent: 'space-between',
-        }}
+    <View style={styles.recomendedPoiContainer}>
+      <View style={{ width: '30%', height: '100%', borderRadius: 10 }}>
+        <FavoriteBtn Poi={Poi} width={23} height={19} color='white' />
+        <Image
+          source={require('../../assets/images/poi-place-image.jpeg')}
+          style={styles.recomendedPoiImage}
+        />
+      </View>
+      <Pressable
+        onPress={() =>
+          navigation.navigate('AboutPoi', {
+            PoiId: Poi.id,
+          })
+        }
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.5 : 1,
+            padding: 10,
+            paddingBottom: 0,
+            width: '70%',
+            justifyContent: 'space-between',
+          },
+        ]}
       >
         <Text style={GlobalStyles.SmallTextBlueBold}>{Poi.poiTitle}</Text>
         <View style={styles.bottomRow}>
@@ -46,8 +48,8 @@ const PoiThumbnail = ({ Poi }: RecommendedPoiBoxProps) => {
           </View>
           <ArrowRight width={17} />
         </View>
-      </View>
-    </TouchableOpacity>
+      </Pressable>
+    </View>
   );
 };
 
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   recomendedPoiImage: {
     // width: 93,
     // height: 93,
-    width: '30%',
+    width: '100%',
     height: '100%',
     borderRadius: 10,
   },

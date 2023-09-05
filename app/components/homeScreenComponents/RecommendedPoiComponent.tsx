@@ -1,10 +1,11 @@
 import { View, Text, Dimensions } from 'react-native';
 import React, { useState } from 'react';
-import RecommendedPoiBox from './RecommendedPoiBox';
+import RecommendedPoiThumbnail from './RecommendedPoiThumbnail';
 import { ScrollView } from 'react-native-gesture-handler';
 import { PointOfInterest } from '../../data/poiData';
 import { useAppContainer } from '../container/Context';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import PoiThumbnail from '../PoiThumbnail';
 
 const RecommendedPoiComponent = () => {
   const { poiData } = useAppContainer();
@@ -28,7 +29,7 @@ const RecommendedPoiComponent = () => {
         showsVerticalScrollIndicator={false}
       >
         {poiData.map((Poi: PointOfInterest) => (
-          <RecommendedPoiBox Poi={Poi} key={Poi.id} />
+          <PoiThumbnail Poi={Poi} key={Poi.id} />
         ))}
         <Text
           style={[
