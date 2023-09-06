@@ -19,7 +19,6 @@ const AppNavigationIconsComponent = ({
   const route = useRoute<any>();
   const { poiData } = useAppContainer();
   const onPoiAboutPage = route.params;
- 
 
   return (
     <View
@@ -28,7 +27,7 @@ const AppNavigationIconsComponent = ({
           ? {
               flexDirection: 'row',
               alignItems: 'center',
-              gap: 13,
+              gap: 40,
               transform: [{ translateX: 51 }],
             }
           : { flexDirection: 'row', alignItems: 'center', gap: 13 }
@@ -36,9 +35,9 @@ const AppNavigationIconsComponent = ({
     >
       {onPoiAboutPage !== undefined && (
         <ShareIcon
-          width={33}
+          width={24}
           style={{
-            transform: [{ translateX: -36 }],
+            transform: [{ translateX: -46 }],
           }}
         />
       )}
@@ -51,7 +50,7 @@ const AppNavigationIconsComponent = ({
                   Poi => Poi.id === route.params?.PoiId
                 ) as PointOfInterest
               }
-              width={33}
+              width={30}
               height={30}
               color='black'
             />

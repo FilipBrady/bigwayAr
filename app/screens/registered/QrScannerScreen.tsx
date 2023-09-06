@@ -30,7 +30,6 @@ const QrScannerScreen = () => {
     data: string;
   }) => {
     setScanned(true);
-    // alert(`Bar code with type ${type} and data ${data} has been scanned`);
     navigation.navigate('AboutPoi', {
       PoiId: data,
     });
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
+    
   },
   camera: {
     flex: 1,

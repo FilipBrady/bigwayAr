@@ -4,6 +4,7 @@ import { FIREBASE_AUTH } from '../../../firebase';
 import StatusBarComponent from '../../components/homeScreenComponents/StatusBarComponent';
 import RecommendedPoiComponent from '../../components/homeScreenComponents/RecommendedPoiComponent';
 import AppNavigationBar2 from '../../components/navigation/AppNavigationBar2';
+import { COLORS } from '../../styles/Colors';
 
 const HomeScreen = () => {
   return (
@@ -23,5 +24,6 @@ const styles = StyleSheet.create({
   homeScreenContainer: {
     height: '100%',
     paddingHorizontal: 21,
+    backgroundColor: COLORS.white
   },
 });

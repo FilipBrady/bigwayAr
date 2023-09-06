@@ -5,11 +5,12 @@ import PoiThumbnail from '../../components/PoiThumbnail';
 import { PointOfInterest } from '../../data/poiData';
 import { useAppContainer } from '../../components/container/Context';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import { COLORS } from '../../styles/Colors';
 
 const FavoritePoiScreen = () => {
   const { poiData, currentUserData } = useAppContainer();
   return (
-    <View style={{ paddingHorizontal: 21 }}>
+    <View style={{ paddingHorizontal: 21, backgroundColor: COLORS.white }}>
       <View>
         <AppNavigationBar2 navOrBack={'back'} screenTitle={'Obľúbené POI'} />
       </View>
