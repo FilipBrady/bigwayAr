@@ -2,34 +2,47 @@ import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import SuccesIcon from '../../assets/succes-icon.svg';
 import ErrorIcon from '../../assets/error-icon.svg';
+import PoiStar from '../../assets/poi-star.svg';
+import HeartIconFull from '../../assets/heart-icon-full-red.svg';
+import HeartIconEmptyRed from '../../assets/heart-icon-empty-red.svg';
 
 type NotificationProps = {
-  error: string | null;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  message: string | null;
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  points?: number;
+  setPoints?: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const NotificationMsg = ({ error, setError }: NotificationProps) => {
+const NotificationMsg = ({
+  message,
+  setMessage,
+  points,
+  setPoints,
+}: NotificationProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const animationValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    setIsVisible(!!error);
+    setIsVisible(!!message);
 
     Animated.timing(animationValue, {
-      toValue: error ? 1 : 0,
+      toValue: message ? 1 : 0,
       duration: 400,
       easing: Easing.ease,
       useNativeDriver: false,
     }).start();
 
-    if (error) {
+    if (message) {
       const timeout = setTimeout(() => {
         setIsVisible(false);
         clearTimeout(timeout);
-        setError('');
+        setMessage('');
+        if (points && setPoints) {
+          setPoints(0);
+        }
       }, 4000);
     }
-  }, [error]);
+  }, [message]);
 
   return isVisible ? (
     <Animated.View
@@ -51,24 +64,41 @@ const NotificationMsg = ({ error, setError }: NotificationProps) => {
         },
       ]}
     >
-      {error === 'Úspešne prihlásený' ? (
+      {message === 'Úspešne prihlásený' ? (
         <View style={styles.notificationBox}>
           <SuccesIcon width={24} height={24} />
           <Text style={styles.notificationText}>Úspešne prihlásený</Text>
         </View>
-      ) : error === 'Firebase: Error (auth/invalid-email).' ||
-        error === 'Firebase: Error (auth/user-not-found).' ||
-        error === 'Firebase: Error (auth/wrong-password).' ? (
+      ) : message === 'Firebase: Error (auth/invalid-email).' ||
+        message === 'Firebase: Error (auth/user-not-found).' ||
+        message === 'Firebase: Error (auth/wrong-password).' ? (
         <View style={styles.notificationBox}>
           <ErrorIcon width={24} height={24} />
           <Text style={styles.notificationText}>
             Chybné prihlasovacie údaje
           </Text>
         </View>
-      ) : error ? (
+      ) : message === 'Pridané do obľúbených' ? (
+        <View style={styles.notificationBox}>
+          <HeartIconFull width={24} height={24} />
+          <Text style={styles.notificationText}>Pridané do obľúbených</Text>
+        </View>
+      ) : message === 'Odobrané z obľúbených' ? (
+        <View style={styles.notificationBox}>
+          <HeartIconEmptyRed width={24} height={24} />
+          <Text style={styles.notificationText}>Odobrané z obľúbených</Text>
+        </View>
+      ) : message === 'Získali ste body' && points ? (
+        <View style={styles.notificationBox}>
+          <PoiStar width={24} height={24} />
+          <Text style={styles.notificationText}>
+            Získali ste {points} bodov
+          </Text>
+        </View>
+      ) : message ? (
         <View style={styles.notificationBox}>
           <ErrorIcon width={24} height={24} />
-          <Text style={styles.notificationText}>{error}</Text>
+          <Text style={styles.notificationText}>{message}</Text>
         </View>
       ) : (
         ''
@@ -79,13 +109,15 @@ const NotificationMsg = ({ error, setError }: NotificationProps) => {
 
 const styles = StyleSheet.create({
   notificationContainer: {
-    width: '80%',
+    width: '100%',
     position: 'absolute',
-    top: 20,
+    top: 49,
     marginHorizontal: 'auto',
-    zIndex: 100,
+    zIndex: 1000,
+    alignItems: 'center',
   },
   notificationBox: {
+    width: '80%',
     flexDirection: 'row',
     gap: 18,
     borderRadius: 15,

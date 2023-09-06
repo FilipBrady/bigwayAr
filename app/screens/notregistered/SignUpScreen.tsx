@@ -13,19 +13,21 @@ import Lock from '../../../assets/lock.svg';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
 import NotificationMsg from '../../components/NotificationMsg';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { useAppContainer } from '../../components/container/Context';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repetePassword, setRepetePassword] = useState('');
-  const [error, setError] = useState<string | null>('');
+  const { message, setMessage } = useAppContainer();
 
   async function signUp() {
     if (
@@ -42,6 +44,10 @@ const SignUpScreen = ({ navigation }: any) => {
           password
         );
         const userUid = userCredential.user.uid;
+        updateProfile(userCredential.user, {
+          photoURL:
+            'https://firebasestorage.googleapis.com/v0/b/bigwayar.appspot.com/o/user-profile-pic.jpeg?alt=media&token=35f46c75-611f-4532-ad8f-6f5ef9b1b670',
+        });
         const newUserDocRef = doc(collection(FIREBASE_DB, 'users'), userUid);
         await setDoc(newUserDocRef, {
           id: userUid,
@@ -54,15 +60,15 @@ const SignUpScreen = ({ navigation }: any) => {
         navigation.navigate('Sign In');
         if (FIREBASE_AUTH.currentUser !== null) {
           sendEmailVerification(FIREBASE_AUTH.currentUser);
-          setError('Úspešne prihlásený');
+          setMessage('Úspešne prihlásený');
         }
       } catch (error: any) {
-        setError(error.message);
+        setMessage(error.message);
       }
     } else if (password !== repetePassword) {
-      setError('Heslá sa nezhodujú');
+      setMessage('Heslá sa nezhodujú');
     } else {
-      setError('Vyplň všetky polia');
+      setMessage('Vyplň všetky polia');
     }
   }
 
@@ -71,7 +77,6 @@ const SignUpScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      <NotificationMsg error={error} setError={setError} />
       <View style={NotRegisteredStyles.container}>
         <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
         <View style={NotRegisteredStyles.formContainer}>

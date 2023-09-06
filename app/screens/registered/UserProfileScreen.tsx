@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppNavigationBar2 from '../../components/navigation/AppNavigationBar2';
 import { useAppContainer } from '../../components/container/Context';
 import { FIREBASE_AUTH, FIREBASE_STORAGE } from '../../../firebase';
@@ -11,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateProfile } from 'firebase/auth';
 import {
   getDownloadURL,
+  getStorage,
   ref,
   uploadBytes,
   uploadBytesResumable,
@@ -18,71 +19,61 @@ import {
 
 const UserProfileScreen = () => {
   const { currentUserData } = useAppContainer();
-  const [image, setImage] = useState<any>();
+  const [usersPhotoUrl, setUsersPhotoUrl] = useState(
+    `${FIREBASE_AUTH.currentUser?.photoURL}`
+  );
   const storageRef = ref(
     FIREBASE_STORAGE,
     `${FIREBASE_AUTH.currentUser?.uid}/profilePhoto`
   );
 
-  const updateProfilePhoto = (photoUri: any) => {
-    const user = FIREBASE_AUTH.currentUser;
-    uploadBytesResumable(storageRef, photoUri).then(snapshot => {
-      console.log('Uploaded');
-    });
-  };
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
     });
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      uploadFile(result.assets[0].uri, 'profilePfoto');
+      uploadFile(result.assets[0].uri);
     } else {
       console.log('User cancelled image picker');
     }
   };
-  // const uriToBlob = (uri: any) => {
-  //   return new Promise((resolve, reject) => {
-  //     const xhr = new XMLHttpRequest();
-  //     xhr.onload = function () {
-  //       // return the blob
-  //       resolve(xhr.response);
-  //     };
-  //     xhr.onerror = function () {
-  //       reject(new Error('uriToBlob failed'));
-  //     };
-  //     xhr.responseType = 'blob';
-  //     xhr.open('GET', uri, true);
+  const uriToBlob = (uri: any) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new Error('uriToBlob failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
 
-  //     xhr.send(null);
-  //   });
-  // };
+      xhr.send(null);
+    });
+  };
 
-  async function uploadFile(uri: any, filename: any) {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const uploadImage = uploadBytesResumable(storageRef, blob);
-
-    uploadImage.on(
-      'state_changed',
-      (snapshot: any) => {
-        console.log(
-          'Upload id done on ' +
-            snapshot.bytesTransfered / snapshot.totalBytes +
-            ' %'
-        );
-      },
-      (error: any) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadImage.snapshot.ref).then(async downloadUrl => {});
-      }
-    );
+  async function uploadFile(uri: any) {
+    const blobFile = await uriToBlob(uri);
+    try {
+      uploadBytes(storageRef, blobFile as Blob).then(async snapshot => {
+        console.log('snapshot', snapshot);
+        const url = await getDownloadURL(storageRef);
+        setUsersPhotoUrl(url);
+        if (FIREBASE_AUTH.currentUser) {
+          updateProfile(FIREBASE_AUTH.currentUser, {
+            photoURL: url,
+          });
+        }
+        return url;
+      });
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
   }
 
   return (
@@ -99,7 +90,7 @@ const UserProfileScreen = () => {
         }}
       >
         <Image
-          source={{ uri: FIREBASE_AUTH.currentUser?.photoURL }}
+          source={{ uri: usersPhotoUrl }}
           width={153}
           height={153}
           style={{ width: 153, height: 153, borderRadius: 5 }}

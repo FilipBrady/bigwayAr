@@ -5,12 +5,17 @@ import WelcomeScreen from './WelcomeScreen';
 import LoginScreen from './LogInScreen';
 import SignUpScreen from './SignUpScreen';
 import ForgotPasswordScreen from './ForgotPasswordScreen';
+import { useAppContainer } from '../../components/container/Context';
+import NotificationMsg from '../../components/NotificationMsg';
 
 const Stack = createNativeStackNavigator();
 
 export default function NotRegisteredScreen() {
+  const { message, setMessage } = useAppContainer();
+
   return (
     <NavigationContainer independent={true}>
+      <NotificationMsg message={message} setMessage={setMessage} />
       <Stack.Navigator>
         <Stack.Screen
           name='Welcome'

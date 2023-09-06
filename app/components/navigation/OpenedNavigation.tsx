@@ -19,6 +19,8 @@ import LogOutIcon from '../../../assets/logout.svg';
 import OpenedNavigationComponent from './OpenedNavigationComponent';
 import { signOut } from 'firebase/auth';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import { FIREBASE_AUTH, FIREBASE_STORAGE } from '../../../firebase';
+import { getDownloadURL, ref } from 'firebase/storage';
 
 type OpenNavigationProps = {
   isNavigationOpen: boolean;
@@ -45,7 +47,7 @@ const OpenedNavigation = ({
       navigationItenId: 3,
       navigationItemIcon: <ScanIconGreen width={30} height={30} />,
       navigationItemText: 'Zoznam získaných POI/QR',
-      navigationItemHref: 'Home',
+      navigationItemHref: 'VisitedPoiLocations',
     },
     {
       navigationItenId: 4,
@@ -57,7 +59,7 @@ const OpenedNavigation = ({
       navigationItenId: 5,
       navigationItemIcon: (
         <Image
-          source={require('../../../assets/images/user-profile-pic.jpeg')}
+          source={{ uri: `${FIREBASE_AUTH.currentUser?.photoURL}` }}
           width={41}
           height={41}
           style={{ width: 41, height: 41, borderRadius: 5 }}
@@ -73,6 +75,7 @@ const OpenedNavigation = ({
       navigationItemHref: 'LogOut',
     },
   ]);
+
   const animationValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

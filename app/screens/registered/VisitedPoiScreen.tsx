@@ -1,0 +1,67 @@
+import { View, Text, Dimensions, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { COLORS } from '../../styles/Colors';
+import AppNavigationBar2 from '../../components/navigation/AppNavigationBar2';
+import PoiThumbnail from '../../components/PoiThumbnail';
+import { useAppContainer } from '../../components/container/Context';
+import { GlobalStyles } from '../../styles/GlobalStyles';
+import VisitedPoiThumbnailBox from '../../components/VisitedPoiThumbnailBox';
+
+const VisitedPoiScreen = () => {
+  const { poiData, currentUserData } = useAppContainer();
+  return (
+    <View
+      style={{
+        paddingHorizontal: 21,
+        backgroundColor: COLORS.white,
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <AppNavigationBar2
+        navOrBack={'back'}
+        screenTitle={'Zoznam získanúch POI/QR'}
+      />
+      <ScrollView
+        style={{
+          padding: 20,
+          paddingHorizontal: 0,
+          width: Dimensions.get('screen').width,
+          height: Dimensions.get('screen').height - 130,
+          transform: [{ translateX: -21 }],
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {currentUserData && currentUserData.visitedPlaces.length === 0 ? (
+          <View
+            style={{
+              paddingHorizontal: 21,
+              alignItems: 'center',
+            }}
+          >
+            <Text style={GlobalStyles.BigTextBlueBold}>
+              Zatiaľ nemáte žiadne obľúbené miesta
+            </Text>
+          </View>
+        ) : (
+          currentUserData &&
+          currentUserData.visitedPlaces.map(visitedPlace =>
+            poiData.map(Poi => {
+              if (visitedPlace.poiId === Poi.id) {
+                return (
+                  <VisitedPoiThumbnailBox
+                    Poi={Poi}
+                    visitedPlace={visitedPlace}
+                    key={visitedPlace.visitedPlaceId}
+                  />
+                );
+              }
+            })
+          )
+        )}
+      </ScrollView>
+    </View>
+  );
+};
+
+export default VisitedPoiScreen;
