@@ -16,11 +16,16 @@ import {
   UserData,
   UsersData,
 } from '../../data/poiData';
+import React from 'react';
 
 export type AppState = {
   poiData: PointsOfInterest;
   usersData: UsersData;
   currentUserData: UserData | undefined;
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  message: string | null;
+  setPointsGained: React.Dispatch<React.SetStateAction<number>>;
+  pointsGained: number;
 };
 
 type Props = {
@@ -31,6 +36,9 @@ const Container = ({ children }: Props) => {
   const [poiData, setPoiData] = useState<PointsOfInterest>([]);
   const [usersData, setUsersData] = useState<UsersData>([]);
   const [currentUserData, setCurrentUserData] = useState<UserData>();
+  const [message, setMessage] = useState<string | null>('');
+  const [pointsGained, setPointsGained] = useState(0);
+
   useEffect(() => {
     const fetchPoiData = async () => {
       if (!hasLoaded) {
@@ -85,6 +93,10 @@ const Container = ({ children }: Props) => {
     poiData: poiData,
     usersData: usersData,
     currentUserData: currentUserData,
+    setMessage: setMessage,
+    message: message,
+    setPointsGained: setPointsGained,
+    pointsGained: pointsGained,
   };
 
   return <Provider value={appState}>{children(appState)}</Provider>;

@@ -8,21 +8,19 @@ import {
 import React, { useState } from 'react';
 import UserIcon from '../../../assets/user.svg';
 import Lock from '../../../assets/lock.svg';
-import {
-  signInWithCredential,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import { signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import FormInput from '../../components/FormInput';
 import NotRegisteredStyles from '../../styles/NotRegisteredStyles';
 import NotificationMsg from '../../components/NotificationMsg';
 import { getDocs, collection } from 'firebase/firestore';
+import { useAppContainer } from '../../components/container/Context';
 
 const LoginScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [error, setError] = useState<string | null>('');
+  const { message, setMessage } = useAppContainer();
 
   async function signIn() {
     if (username !== '' && password !== '') {
@@ -35,12 +33,12 @@ const LoginScreen = ({ navigation }: any) => {
       try {
         await signInWithEmailAndPassword(FIREBASE_AUTH, userEmail, password);
         // navigation.navigate('Sign In');
-        setError('Úspešne prihlásený');
+        setMessage('Úspešne prihlásený');
       } catch (error: any) {
-        setError(error.message);
+        setMessage(error.message);
       }
     } else {
-      setError('Vyplň všetky polia');
+      setMessage('Vyplň všetky polia');
     }
   }
   return (
@@ -48,7 +46,6 @@ const LoginScreen = ({ navigation }: any) => {
       source={require('../../../assets/background/background.png')}
       style={{ width: '100%', height: '100%', alignItems: 'center' }}
     >
-      <NotificationMsg error={error} setError={setError} />
       <View style={NotRegisteredStyles.container}>
         <Text style={NotRegisteredStyles.appLogo}>Logo appky</Text>
         <View style={NotRegisteredStyles.formContainer}>

@@ -1,5 +1,5 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { doc, collection, updateDoc, arrayUnion } from 'firebase/firestore';
 import { FIREBASE_DB } from '../../firebase';
 import { useAppContainer } from './container/Context';
@@ -7,6 +7,7 @@ import { PointOfInterest } from '../data/poiData';
 import HeartIconFull from '../../assets/heart-icon.svg';
 import HeartIconEmpty from '../../assets/heart-icon-empty.svg';
 import HeartIconEmptyBlack from '../../assets/heart-icon-empty-black.svg';
+import NotificationMsg from './NotificationMsg';
 
 type favoriteBtnProps = {
   Poi: PointOfInterest;
@@ -16,7 +17,7 @@ type favoriteBtnProps = {
 };
 
 const FavoriteBtn = ({ Poi, width, height, color }: favoriteBtnProps) => {
-  const { currentUserData } = useAppContainer();
+  const { currentUserData, message, setMessage } = useAppContainer();
   const userDataToUpdateRef = doc(
     FIREBASE_DB,
     'users',
@@ -33,6 +34,7 @@ const FavoriteBtn = ({ Poi, width, height, color }: favoriteBtnProps) => {
           poiId: poiId,
         }),
       });
+      setMessage('Pridané do obľúbených');
     }
   };
   const handleRemoveFromFavorite = async (poiId: string) => {
@@ -44,6 +46,7 @@ const FavoriteBtn = ({ Poi, width, height, color }: favoriteBtnProps) => {
         await updateDoc(userDataToUpdateRef, {
           favorite: updatedFavorites,
         });
+        setMessage('Odobrané z obľúbených');
       } catch (error) {
         console.error('Error removing item from favorite:', error);
       }

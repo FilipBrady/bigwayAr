@@ -1,6 +1,9 @@
 import { useFonts } from 'expo-font';
 import RootNavigation from './components/RootNavigation';
 import Container from './components/container/Container';
+import React from 'react';
+import NotificationMsg from './components/NotificationMsg';
+import { useAppContainer } from './components/container/Context';
 
 export default function Page() {
   const [loadedFonts] = useFonts({

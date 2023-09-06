@@ -71,7 +71,11 @@ export type UserData = {
   name: string;
   points: number;
   favorite: { favoriteId: string; poiId: string }[];
-  visitedPlaces: { visitedPlaceId: string; poiId: string }[];
+  visitedPlaces: {
+    visitedPlaceId: string;
+    poiId: string;
+    timeOfTheVisit: any;
+  }[];
 };
 
 export type UsersData = UserData[];

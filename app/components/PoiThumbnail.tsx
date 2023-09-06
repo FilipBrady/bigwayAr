@@ -57,17 +57,19 @@ const styles = StyleSheet.create({
   recomendedPoiContainer: {
     flexDirection: 'row',
     width: '90%',
-    height: 93,
+    maxHeight: 100,
+    height: 'auto',
+    minHeight: 93,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-      elevation: 6,
-      shadowColor: '#000000',
-      shadowOffset: {
-        width: 10,
-        height: 10, // Define this value
-      },
-      shadowOpacity: 0.15, // Adjust as needed
-      shadowRadius: 10, // Adjust as needed
+    elevation: 6,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 10,
+      height: 10, // Define this value
+    },
+    shadowOpacity: 0.15, // Adjust as needed
+    shadowRadius: 10, // Adjust as needed
     marginBottom: 15, // Adjust as needed
     marginHorizontal: 21,
   },
