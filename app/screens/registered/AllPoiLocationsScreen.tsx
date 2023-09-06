@@ -8,6 +8,7 @@ import RecommendedPoiComponent from '../../components/homeScreenComponents/Recom
 import PoiThumbnailContainer from '../../components/PoiThumbnailContainer';
 import PoiFilterComponent from '../../components/PoiFilterComponent';
 import { GlobalStyles } from '../../styles/GlobalStyles';
+import { COLORS } from '../../styles/Colors';
 
 const AllPoiLocationsScreen = () => {
   const { poiData } = useAppContainer();
@@ -20,7 +21,7 @@ const AllPoiLocationsScreen = () => {
   );
 
   return (
-    <View style={{ paddingHorizontal: 21 }}>
+    <View style={ { paddingHorizontal: 21, backgroundColor: COLORS.white }}>
       <AppNavigationBar2 navOrBack={'back'} screenTitle={'Všetky lokality'} />
       <View
         style={{

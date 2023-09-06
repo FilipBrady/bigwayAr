@@ -6,6 +6,7 @@ import PoiAboutMainContent from './PoiAboutMainContent';
 import PoiAboutNavigateBtn from './PoiAboutNavigateBtn';
 import AppNavigationBar2 from '../navigation/AppNavigationBar2';
 import { useAppContainer } from '../container/Context';
+import { COLORS } from '../../styles/Colors';
 
 const PoiAboutScreenComponent = () => {
   const route = useRoute();
@@ -14,7 +15,7 @@ const PoiAboutScreenComponent = () => {
 
   const routeId = route.params?.PoiId;
   return (
-    <View>
+    <View style={{backgroundColor: COLORS.white}}>
       <View
         style={{
           paddingHorizontal: 21,

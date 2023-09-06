@@ -12,6 +12,7 @@ import FavoriteBtn from '../FavoriteBtn';
 import { useAppContainer } from '../container/Context';
 import { useRoute } from '@react-navigation/native';
 import AppNavigationIconsComponent from './AppNavigationIconsComponent';
+import React from 'react';
 
 type AppNavigationProps = {
   navOrBack: 'navbar' | 'back';

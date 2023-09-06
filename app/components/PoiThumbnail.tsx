@@ -60,14 +60,14 @@ const styles = StyleSheet.create({
     height: 93,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    elevation: 6,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 10,
-      height: 10, // Define this value
-    },
-    shadowOpacity: 0.15, // Adjust as needed
-    shadowRadius: 10, // Adjust as needed
+      elevation: 6,
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 10,
+        height: 10, // Define this value
+      },
+      shadowOpacity: 0.15, // Adjust as needed
+      shadowRadius: 10, // Adjust as needed
     marginBottom: 15, // Adjust as needed
     marginHorizontal: 21,
   },
