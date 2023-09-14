@@ -1,50 +1,51 @@
-import {
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import FormInput from '../FormInput';
-import AppNavigationBar2 from '../navigation/AppNavigationBar2';
-import { GlobalStyles } from '../../styles/GlobalStyles';
 import CancleIcon from '../../../assets/cancle-icon.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useAppContainer } from '../container/Context';
-import { reload, updatePassword } from 'firebase/auth';
+import { updateEmail, updatePassword } from 'firebase/auth';
+import SuccesIcon from '../../../assets/succes-icon.svg';
 
 type EditUserInfoFieldProps = {
   setIsFormVisible: React.Dispatch<
     React.SetStateAction<{
       isOpen: boolean;
       editedValue: string;
+      defaultValue: string;
     }>
   >;
   isFormVisible: {
     isOpen: boolean;
     editedValue: string;
+    defaultValue: string;
   };
 };
 const EditUserInformationField = ({
   setIsFormVisible,
   isFormVisible,
 }: EditUserInfoFieldProps) => {
-  const [editedValue, setEditedValue] = useState('');
+  const [editedValue, setEditedValue] = useState(isFormVisible.defaultValue);
   const { currentUserData } = useAppContainer();
   const userId = currentUserData?.id;
   const updateUserInfo = async () => {
-    if (userId !== undefined && editedValue !== '') {
+    if (
+      userId !== undefined &&
+      editedValue !== '' &&
+      FIREBASE_AUTH.currentUser !== null
+    ) {
       const userDbRef = doc(FIREBASE_DB, 'users', userId);
       if (isFormVisible.editedValue === 'name') {
         try {
           await updateDoc(userDbRef, {
             name: editedValue,
           });
-          setIsFormVisible({ isOpen: false, editedValue: '' });
+          setIsFormVisible({
+            isOpen: false,
+            editedValue: '',
+            defaultValue: '',
+          });
         } catch (error) {
           console.log(error);
         }
@@ -53,47 +54,55 @@ const EditUserInformationField = ({
           await updateDoc(userDbRef, {
             email: editedValue,
           });
-          setIsFormVisible({ isOpen: false, editedValue: '' });
+          await updateEmail(FIREBASE_AUTH.currentUser, editedValue);
+          setIsFormVisible({
+            isOpen: false,
+            editedValue: '',
+            defaultValue: '',
+          });
         } catch (error) {
           console.log(error);
         }
       } else {
-        if (FIREBASE_AUTH.currentUser !== null) {
-          try {
-            await updatePassword(FIREBASE_AUTH.currentUser, editedValue);
-            setIsFormVisible({ isOpen: false, editedValue: '' });
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          await updatePassword(FIREBASE_AUTH.currentUser, editedValue);
+          setIsFormVisible({
+            isOpen: false,
+            editedValue: '',
+            defaultValue: '',
+          });
+        } catch (error) {
+          console.log(error);
         }
       }
     }
   };
   return (
-    <View>
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 25,
+        width: '100%',
+        gap: 10,
+      }}
+    >
+      <TouchableOpacity
+        activeOpacity={0.3}
+        onPress={() =>
+          setIsFormVisible({ isOpen: false, editedValue: '', defaultValue: '' })
+        }
       >
-        <TouchableOpacity
-          activeOpacity={0.3}
-          onPress={() => setIsFormVisible({ isOpen: false, editedValue: '' })}
-        >
-          <CancleIcon rotation={180} width={30} height={30} />
-        </TouchableOpacity>
-        <Text style={GlobalStyles.HeadlineBlueBold}>Edit your Info</Text>
-        <View />
-      </View>
+        <CancleIcon rotation={180} width={20} height={20} />
+      </TouchableOpacity>
       <TextInput
-        placeholder={`Edit your ${isFormVisible.editedValue}`}
+        placeholder={isFormVisible.defaultValue}
         style={styles.inputField}
         value={editedValue}
         onChangeText={text => setEditedValue(text)}
       />
-      <Button title='Potvrdiť' onPress={updateUserInfo} />
+      <SuccesIcon width={30} onPress={updateUserInfo} />
     </View>
   );
 };
@@ -104,7 +113,8 @@ const styles = StyleSheet.create({
   inputField: {
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-    width: '100%',
+    width: '90%',
+    height: 25,
     paddingHorizontal: 21,
     paddingVertical: 5,
     fontSize: 16,
