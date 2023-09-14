@@ -11,7 +11,7 @@ const FavoritePoiScreen = () => {
   const { poiData, currentUserData } = useAppContainer();
   return (
     <View style={{ paddingHorizontal: 21, backgroundColor: COLORS.white }}>
-      <View>
+      <View style={{ height: '10%' }}>
         <AppNavigationBar2 navOrBack={'back'} screenTitle={'Obľúbené POI'} />
       </View>
       <ScrollView
@@ -19,7 +19,7 @@ const FavoritePoiScreen = () => {
           padding: 20,
           paddingHorizontal: 0,
           width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height - 130,
+          height: '90%',
           transform: [{ translateX: -21 }],
         }}
         showsVerticalScrollIndicator={false}
@@ -45,6 +45,7 @@ const FavoritePoiScreen = () => {
             })
           )
         )}
+        <View style={{ height: 30 }} />
       </ScrollView>
     </View>
   );

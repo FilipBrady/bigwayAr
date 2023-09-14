@@ -21,29 +21,33 @@ const AllPoiLocationsScreen = () => {
   );
 
   return (
-    <View style={ { paddingHorizontal: 21, backgroundColor: COLORS.white }}>
-      <AppNavigationBar2 navOrBack={'back'} screenTitle={'Všetky lokality'} />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: 39,
-        }}
-      >
-        <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
-          Zoradiť podľa
-        </Text>
-        <TouchableOpacity
-          activeOpacity={0.3}
-          onPress={() => setIsFilterVisible(!isFilterVisible)}
+    <View style={{ paddingHorizontal: 21, backgroundColor: COLORS.white }}>
+      <View style={{ height: '20%' }}>
+        <AppNavigationBar2 navOrBack={'back'} screenTitle={'Všetky lokality'} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 39,
+          }}
         >
-          <FilterIcon width={25} />
-        </TouchableOpacity>
+          <Text style={GlobalStyles.ExtraSmallTextGrayRegulat}>
+            Zoradiť podľa
+          </Text>
+          <TouchableOpacity
+            activeOpacity={0.3}
+            onPress={() => setIsFilterVisible(!isFilterVisible)}
+          >
+            <FilterIcon width={25} />
+          </TouchableOpacity>
+        </View>
+        {isFilterVisible && (
+          <PoiFilterComponent setFilterByPoints={setFilterByPoints} />
+        )}
       </View>
-      {isFilterVisible && (
-        <PoiFilterComponent setFilterByPoints={setFilterByPoints} />
-      )}
-      <PoiThumbnailContainer PoiByPoints={PoiByPoints} />
+      <View style={{ maxHeight: '80%' }}>
+        <PoiThumbnailContainer PoiByPoints={PoiByPoints} />
+      </View>
     </View>
   );
 };

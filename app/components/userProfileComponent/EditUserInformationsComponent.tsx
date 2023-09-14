@@ -11,50 +11,93 @@ const EditUserInformationsComponent = () => {
   const [isFormVisible, setIsFormVisible] = useState({
     isOpen: false,
     editedValue: '',
+    defaultValue: '',
   });
 
   return (
     <View style={{ marginTop: 47 }}>
-      <View style={styles.infoBox}>
-        <Text style={GlobalStyles.BigTextBlueRegular}>
-          {currentUserData?.name}
-        </Text>
-        <TouchableOpacity
-          activeOpacity={0.3}
-          onPress={() =>
-            setIsFormVisible({ isOpen: true, editedValue: 'name' })
-          }
-        >
-          <EditIcon width={19} />
-        </TouchableOpacity>
+      <View>
+        {isFormVisible.isOpen && isFormVisible.editedValue === 'name' ? (
+          <View style={{ width: '90%' }}>
+            <EditUserInformationField
+              setIsFormVisible={setIsFormVisible}
+              isFormVisible={isFormVisible}
+            />
+          </View>
+        ) : (
+          <View style={styles.infoBox}>
+            <Text style={GlobalStyles.BigTextBlueRegular}>
+              {currentUserData?.name}
+            </Text>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={() =>
+                setIsFormVisible({
+                  isOpen: true,
+                  editedValue: 'name',
+                  defaultValue: String(currentUserData?.name),
+                })
+              }
+            >
+              <EditIcon width={19} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      <View style={styles.infoBox}>
-        <Text style={GlobalStyles.BigTextBlueRegular}>
-          {currentUserData?.email}
-        </Text>
-        <TouchableOpacity
-          activeOpacity={0.3}
-          onPress={() =>
-            setIsFormVisible({ isOpen: true, editedValue: 'email' })
-          }
-        >
-          <EditIcon width={19} />
-        </TouchableOpacity>
+      <View>
+        {isFormVisible.isOpen && isFormVisible.editedValue === 'email' ? (
+          <View style={{ width: '90%' }}>
+            <EditUserInformationField
+              setIsFormVisible={setIsFormVisible}
+              isFormVisible={isFormVisible}
+            />
+          </View>
+        ) : (
+          <View style={styles.infoBox}>
+            <Text style={GlobalStyles.BigTextBlueRegular}>
+              {currentUserData?.email}
+            </Text>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={() =>
+                setIsFormVisible({
+                  isOpen: true,
+                  editedValue: 'email',
+                  defaultValue: String(currentUserData?.email),
+                })
+              }
+            >
+              <EditIcon width={19} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      <View style={styles.infoBox}>
-        <Text style={GlobalStyles.BigTextBlueRegular}>Change Password</Text>
-        <TouchableOpacity
-          activeOpacity={0.3}
-          onPress={() =>
-            setIsFormVisible({ isOpen: true, editedValue: 'password' })
-          }
-        >
-          <EditIcon width={19} />
-        </TouchableOpacity>
+      <View>
+        {isFormVisible.isOpen && isFormVisible.editedValue === 'password' ? (
+          <View style={{ width: '90%' }}>
+            <EditUserInformationField
+              setIsFormVisible={setIsFormVisible}
+              isFormVisible={isFormVisible}
+            />
+          </View>
+        ) : (
+          <View style={styles.infoBox}>
+            <Text style={GlobalStyles.BigTextBlueRegular}>Change Password</Text>
+            <TouchableOpacity
+              activeOpacity={0.3}
+              onPress={() =>
+                setIsFormVisible({
+                  isOpen: true,
+                  editedValue: 'password',
+                  defaultValue: 'Password',
+                })
+              }
+            >
+              <EditIcon width={19} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      {isFormVisible.isOpen && (
-        <EditUserInformationField setIsFormVisible={setIsFormVisible} isFormVisible={isFormVisible} />
-      )}
     </View>
   );
 };
@@ -67,5 +110,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'center',
     marginBottom: 25,
+    width: '100%',
   },
 });

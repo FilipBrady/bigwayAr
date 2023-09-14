@@ -18,16 +18,18 @@ const VisitedPoiScreen = () => {
         height: '100%',
       }}
     >
-      <AppNavigationBar2
-        navOrBack={'back'}
-        screenTitle={'Zoznam získanúch POI/QR'}
-      />
+      <View style={{ height: '10%' }}>
+        <AppNavigationBar2
+          navOrBack={'back'}
+          screenTitle={'Zoznam získanúch POI/QR'}
+        />
+      </View>
       <ScrollView
         style={{
           padding: 20,
           paddingHorizontal: 0,
           width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height - 130,
+          height: '90%',
           transform: [{ translateX: -21 }],
         }}
         showsVerticalScrollIndicator={false}
@@ -59,6 +61,7 @@ const VisitedPoiScreen = () => {
             })
           )
         )}
+        <View style={{ height: 30 }} />
       </ScrollView>
     </View>
   );

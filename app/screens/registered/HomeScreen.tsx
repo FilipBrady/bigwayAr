@@ -9,12 +9,13 @@ import { COLORS } from '../../styles/Colors';
 const HomeScreen = () => {
   return (
     <View style={styles.homeScreenContainer}>
-      <AppNavigationBar2
-        navOrBack={'navbar'}
-        screenTitle={'Domov'}
-      />
-      <StatusBarComponent />
-      <RecommendedPoiComponent />
+      <View style={{maxHeight: "15%"}}>
+        <AppNavigationBar2 navOrBack={'navbar'} screenTitle={'Domov'} />
+        <StatusBarComponent />
+      </View>
+      <View style={{ maxHeight: '85%' }}>
+        <RecommendedPoiComponent />
+      </View>
     </View>
   );
 };
@@ -24,6 +25,6 @@ const styles = StyleSheet.create({
   homeScreenContainer: {
     height: '100%',
     paddingHorizontal: 21,
-    backgroundColor: COLORS.white
+    backgroundColor: COLORS.white,
   },
 });

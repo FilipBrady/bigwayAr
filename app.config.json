@@ -18,6 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "userInterfaceStyle": "light",
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Allow BigwayAr to access camera.",
@@ -25,6 +26,7 @@
       }
     },
     "android": {
+      "userInterfaceStyle": "light",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -38,6 +40,7 @@
     },
     "plugins": [
       "expo-router",
+      "./plugins/withDisableForcedDarkModeAndroid.js",
       [
         "expo-barcode-scanner",
         {
